@@ -4,7 +4,7 @@
   <% end %>
 </div>
 
-<%= form_with model: @recipe_type do |f| %>
+<%= form_with model: @recipe_type, data: { remote: false } do |f| %>
   <div class="form-group">
     <%= f.label :name, 'Nome' %>
     <%= f.text_field :name, class: 'form-control' %>
