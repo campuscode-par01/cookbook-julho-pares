@@ -1,0 +1,6 @@
+<% if @recipes.any? %>
+<p> <%= @recipes.size%> <%= "recipe".pluralize(@recipes.size)%> <%="encontrada".pluralize(@recipes.size) %></p>
+<%= render @recipes %>
+<% else %>
+  <p>Nenhuma receita encontrada</p>
+<% end %>
