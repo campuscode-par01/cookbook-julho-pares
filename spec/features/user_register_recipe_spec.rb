@@ -1,14 +1,30 @@
 require 'rails_helper'
 
 feature 'User register recipe' do
+  scenario 'Must be signed in' do 
+    visit root_path
+    
+    expect(current_path).to eq root_path
+    expect(page).not_to have_content('Enviar uma receita')
+
+  end  
+
   scenario 'successfully' do
+
     #cria os dados necessários, nesse caso não vamos criar dados no banco
     RecipeType.create(name: 'Sobremesa')
     RecipeType.create(name: 'Entrada')
-    Cuisine.create(name: 'Arabe')
+    Cuisine.create(name: 'Arabe')  
+    user = User.create(email: 'lucas@exemplo.com', password: '123456')
+ 
+    visit root_path
+    click_on 'Entrar'
+    fill_in 'Email', with: 'lucas@exemplo.com'
+    fill_in 'Senha', with: '123456'
+    click_on 'Logar'
 
     # simula a ação do usuário
-    visit root_path
+  
     click_on 'Enviar uma receita'
 
     fill_in 'Título', with: 'Tabule'
@@ -20,8 +36,8 @@ feature 'User register recipe' do
     fill_in 'Como Preparar', with: 'Misturar tudo e servir. Adicione limão a gosto.'
     click_on 'Enviar'
 
-
     # expectativas
+    expect(Recipe.last.user).to eq user
     expect(page).to have_css('h1', text: 'Tabule')
     expect(page).to have_css('h3', text: 'Detalhes')
     expect(page).to have_css('p', text: 'Entrada')

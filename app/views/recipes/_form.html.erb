@@ -4,7 +4,7 @@
   <% end %>
 </div>
 
-<%= form_with model:, data: { remote: false } recipe do |f| %>
+<%= form_with model: recipe, data: { remote: false } do |f| %>
   <div class="form-group">
     <%= f.label :title, 'Título' %>
     <%= f.text_field :title, class: 'form-control' %>

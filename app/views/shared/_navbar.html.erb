@@ -10,11 +10,20 @@
         <a class="nav-link" href="<%= root_path %>">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="<%= new_recipe_path %>">Enviar uma receita</a>
+      <% if user_signed_in? %>
+        <a class="nav-link" href="<%= new_recipe_path %>">'Enviar uma receita</a>
+        <% end %>
       </li>
       <li class="nav-item">
         <%= link_to 'Cadastrar tipo de receita', new_recipe_type_path, class: 'nav-link' %>
         <%= link_to 'Cadastrar cozinha', new_cuisine_path, class: 'nav-link' %>
+      </li>
+      <li class="nav-item">
+        <% if user_signed_in? %>
+        <%= link_to 'Sair', destroy_user_session_path, method: :delete %>
+        <% else %>
+          <%= link_to 'Entrar', new_user_session_path %>
+        <% end %>
       </li>
     </ul>
     

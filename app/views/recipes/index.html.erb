@@ -1,5 +1,8 @@
 <h1>CookBook</h1>
 <p>Bem-vindo ao maior livro de receitas online</p>
+<% if user_signed_in? %>
+  <p>Bem vindo <%= current_user.email %></p>
+<% end %>
 
 <%= render @recipes %>
 
