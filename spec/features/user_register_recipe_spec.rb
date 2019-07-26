@@ -51,6 +51,15 @@ feature 'User register recipe' do
   end
 
   scenario 'and must fill in all fields' do
+
+    user = User.create(email: 'lucas@exemplo.com', password: '123456')
+
+    visit root_path
+    click_on 'Entrar'
+    fill_in 'Email', with: 'lucas@exemplo.com'
+    fill_in 'Senha', with: '123456'
+    click_on 'Logar'
+
     # simula a ação do usuário
     visit root_path
     click_on 'Enviar uma receita'

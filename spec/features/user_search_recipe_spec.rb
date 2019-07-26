@@ -2,10 +2,13 @@ require 'rails_helper'
 
 feature 'User search recipe' do
   scenario 'successfully' do
+    user = User.create(email: 'lucas@exemplo.com', password: '123456')
+
+
     recipe_type = RecipeType.create(name: 'Entrada')
     cuisine = Cuisine.create(name: 'Brasileira')
-    Recipe.create(title: 'Bolo de cenoura', difficulty: 'Médio',
-                  recipe_type: recipe_type, cuisine: cuisine,
+    Recipe.create(title: 'Bolo de cenoura',difficulty: 'Médio',
+                  recipe_type: recipe_type, cuisine: cuisine, user: user,
                   cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
                   cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes')
 
@@ -38,15 +41,17 @@ feature 'User search recipe' do
   end
 
   scenario 'find all' do
+    user = User.create(email: 'lucas@exemplo.com', password: '123456')
+
     recipe_type = RecipeType.create(name: 'Entrada')
     cuisine = Cuisine.create(name: 'Brasileira')
     Recipe.create(title: 'Bolo de cenoura', difficulty: 'Médio',
-                  recipe_type: recipe_type, cuisine: cuisine,
+                  recipe_type: recipe_type, cuisine: cuisine, user: user,
                   cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
                   cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes')
 
     Recipe.create(title: 'Bolo de maracuja', difficulty: 'Médio',
-                  recipe_type: recipe_type, cuisine: cuisine,
+                  recipe_type: recipe_type, cuisine: cuisine, user: user, 
                   cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
                   cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes')
 

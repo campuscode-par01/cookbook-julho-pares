@@ -1,18 +1,63 @@
 require 'rails_helper'
 
 feature 'User update recipe' do
+  scenario 'Must be loged' do
+    user = User.create(email: 'lucas@exemplo.com', password: '123456')
+    recipe_type = RecipeType.create(name: 'Sobremesa')
+    cuisine = Cuisine.create(name: 'Brasileira')
+    recipe = Recipe.create(title: 'Bolo de cenoura', difficulty: 'Médio',
+                           recipe_type: recipe_type, cuisine: cuisine,
+                           cook_time: 50,
+                           user: user,
+                           ingredients: 'Farinha, açucar, cenoura',
+                           cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes')
+
+    # simula a ação do usuário
+    visit root_path
+    click_on 'Bolo de cenoura'
+
+    expect(page).not_to have_content('Editar')
+  end  
+
+  scenario 'Must be loged correct user' do
+    user = User.create(email: 'lucas@exemplo.com', password: '123456')
+    recipe_type = RecipeType.create(name: 'Sobremesa')
+    cuisine = Cuisine.create(name: 'Brasileira')
+    recipe = Recipe.create(title: 'Bolo de cenoura', difficulty: 'Médio',
+                           recipe_type: recipe_type, cuisine: cuisine,
+                           cook_time: 50,
+                           user: user,
+                           ingredients: 'Farinha, açucar, cenoura',
+                           cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes')
+
+    other_user = User.create(email: 'josy@exemplo.com', password: '123456')
+    # simula a ação do usuário
+    visit root_path
+    click_on 'Entrar'
+    fill_in 'Email', with: 'josy@exemplo.com'
+    fill_in 'Senha', with: '123456'
+    click_on 'Logar'
+    click_on 'Bolo de cenoura'
+
+    expect(page).not_to have_content('Editar')
+  end
   scenario 'successfully' do
     recipe_type = RecipeType.create(name: 'Sobremesa')
     RecipeType.create(name: 'Entrada')
     cuisine = Cuisine.create(name: 'Brasileira')
+    user = User.create(email: 'lucas@exemplo.com', password: '123456')
     Cuisine.create(name: 'Arabe')
     Recipe.create(title: 'Bolodecenoura', difficulty: 'Médio',
-                  recipe_type: recipe_type, cuisine: cuisine,
+                  recipe_type: recipe_type, cuisine: cuisine, user: user,
                   cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
                   cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes')
 
     # simula a ação do usuário
     visit root_path
+    click_on 'Entrar'
+    fill_in 'Email', with: 'lucas@exemplo.com'
+    fill_in 'Senha', with: '123456'
+    click_on 'Logar'
     click_on 'Bolodecenoura'
     click_on 'Editar'
 
@@ -39,13 +84,19 @@ feature 'User update recipe' do
   scenario 'and must fill in all fields' do
     recipe_type = RecipeType.create(name: 'Sobremesa')
     cuisine = Cuisine.create(name: 'Brasileira')
+    user = User.create(email: 'lucas@exemplo.com', password: '123456')
     Recipe.create(title: 'Bolodecenoura', difficulty: 'Médio',
                   recipe_type: recipe_type, cuisine: cuisine,
+                  user: user,
                   cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
                   cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes')
 
     # simula a ação do usuário
     visit root_path
+    click_on 'Entrar'
+    fill_in 'Email', with: 'lucas@exemplo.com'
+    fill_in 'Senha', with: '123456'
+    click_on 'Logar'
     click_on 'Bolodecenoura'
     click_on 'Editar'
 
