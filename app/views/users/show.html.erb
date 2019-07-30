@@ -1,0 +1,4 @@
+<%= @user.email%>
+<h1> Minhas Receitas </h1>
+
+<%= render partial: 'recipes/recipe', collection: @user.recipes %>

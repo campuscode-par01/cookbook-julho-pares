@@ -3,7 +3,7 @@ class Recipe < ApplicationRecord
   belongs_to :recipe_type
   belongs_to :user
   has_many  :lists, through: :list_recipes
-
+  has_one_attached :photo
   validates :title, :difficulty, :cook_time, :cook_method,
             :ingredients, presence: true
 
