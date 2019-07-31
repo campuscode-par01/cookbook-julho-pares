@@ -41,6 +41,18 @@ class RecipesController < ApplicationController
     @recipes = Recipe.where("title LIKE ?", "%#{params[:q]}%")
   end  
 
+  def message
+    id = params[:recipe_id].to_i
+    recipe = Recipe.find(id)
+    to = params[:to]
+    from = params[:from]
+    msg = params[:message]
+
+    RecipesMailer.send_recipe(id, from, to, msg)
+    flash[:notice] = "Mensagem enviada com sucesso!"
+    redirect_to recipe
+  end  
+
   private
 
   def set_recipe

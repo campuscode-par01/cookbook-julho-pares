@@ -17,6 +17,18 @@
 <h3>Como Preparar</h3>
 <p><%= @recipe.cook_method %></p>
 
+<%= form_tag(recipe_message_path(@recipe)) do %>
+  <%= label_tag :from, 'De' %>
+  <%= text_field_tag :from %>
+
+  <%= label_tag :to, 'Para' %>
+  <%= text_field_tag :to %>
+
+  <%= label_tag :message, 'Mensagem' %>
+  <%= text_area_tag :message %>
+
+  <%= submit_tag("Enviar receita") %>
+<% end %>
 <% if @recipe.user == current_user %>
 <%= link_to 'Editar', edit_recipe_path(@recipe), class: 'btn btn-info' %>
 <% end %>
